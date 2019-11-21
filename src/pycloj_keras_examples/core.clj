@@ -1,14 +1,15 @@
 (ns  pycloj-keras-examples.core
-  "Constrains the weights to be non-negative.
-    "
-  (:require [pycloj-keras.keras:refer [ Sequential Model]:as keras]
-            [pycloj-keras.datasets :refer [fashion-mnist ] :as datasets]
-            [pycloj-keras.layers   :refer [ Flatten, Dense] :as layers]
-            ))
+  "Constrains the weights to be non-negative."
+  (:require [keras.Sequential :as Sequential]
+            [keras.Model :as Model]
+            [keras.datasets.fashion-mnist :as fashion-mnist]
+            [keras.layers.Flatten :as Flatten]
+            [keras.layers.Dense :as Dense]))
 
 (defmacro def+
   "binding => binding-form
-  internalizes binding-forms as if by def."
+  internalizes binding-forms as if by def.
+  See http://clojuredocs.org/clojure.core/destructure ."
   {:added "1.9", :special-form true, :forms '[(def+ [bindings*])]}
   [& bindings]
   (let [bings (partition 2 (destructure bindings))]
