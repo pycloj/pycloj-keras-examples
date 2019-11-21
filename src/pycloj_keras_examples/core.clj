@@ -1,13 +1,9 @@
 (ns  pycloj-keras-examples.core
   "Constrains the weights to be non-negative.
     "
-  (:require [pycloj-keras.keras
-            :refer [ Sequential Model]
-             :as keras
-            [pycloj-keras.datasets  
-            :refer [fashion-mnist ] :as datasets]
-            [pycloj-keras.layers  
-            :refer [ Flatten, Dense] :as layers]
+  (:require [pycloj-keras.keras:refer [ Sequential Model]:as keras]
+            [pycloj-keras.datasets :refer [fashion-mnist ] :as datasets]
+            [pycloj-keras.layers   :refer [ Flatten, Dense] :as layers]
             ))
 
 (defmacro def+
