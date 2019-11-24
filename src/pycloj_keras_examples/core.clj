@@ -25,23 +25,16 @@
 
 (def+ [[train-images , train-labels], [test-images, test-labels]] (vec mnist-data))
 
-(def f (Flatten [] {:input_shape [28,28]}))
-
-(def layers [f
-             ;; (Dense [128] {:activation "relu"})
-             ;; (Dense [10] {:activation "softmax"})
-             ])
-
 (def model (Sequential
             :layers
-            layers))
+            (def layers [(Flatten [] {:input_shape [28,28]})
+                         (Dense [128] {:activation "relu"})
+                         (Dense [10] {:activation "softmax"})])))
 
 (Sequential/compile model
                     :optimizer "adam"
                     :loss      "sparse_categorical_crossentropy"
                     :metrics   ["accuracy"])
-
-(py/get-attr f "input_shape")
 
 (keras.Sequential/fit model
                       :x train-images
@@ -49,15 +42,3 @@
                       :epochs 10)
 
 
-(let [f (Flatten [] {:input_shape [28,28]})]
-  (py/call-attr f "input_shape"))
-
-
-
-
-(defn -main
-  
-  "I don't do a whole lot ... yet."
-  [& args]
-
-  (println "Hello, World!"))
