@@ -41,6 +41,10 @@
                       :y train-labels
                       :epochs 10)
 
+;;;;;;;;;;;;;;;;;
+
+;; Raw usage
+
 (def keras (py/import-module "keras"))
 (def keras-layers (py/get-attr keras "layers"))
 
