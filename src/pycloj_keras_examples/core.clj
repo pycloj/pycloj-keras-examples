@@ -25,45 +25,32 @@
 
 (def+ [[train-images , train-labels], [test-images, test-labels]] (vec mnist-data))
 
-(def model (Sequential
-            :layers
-            [(Flatten [] {:input_shape [28,28]})
-             (Dense [128] {:activation "relu"})
-             (Dense [10] {:activation "softmax"})]))
+(def model (py/call-attr  keras "Sequential" [(Flatten :input_shape [28,28])
+                                              (Dense :units      128
+                                                     :activation "relu")
+                                              (Dense :units 10
+                                                     :activation "softmax")]))
 
 (Sequential/compile model
                     :optimizer "adam"
                     :loss      "sparse_categorical_crossentropy"
                     :metrics   ["accuracy"])
 
-(keras.Sequential/fit model
-                      :x train-images
-                      :y train-labels
-                      :epochs 10)
+(Sequential/fit model
+                :x train-images
+                :y train-labels
+                :epochs 10)
 
-;;;;;;;;;;;;;;;;;
 
-;; Raw usage
+(def+ [test-loss test-acc]
+  (Sequential/evaluate model
+                       :x test-images
+                       :y test-labels
+                       :verbose 2) )
 
-(def keras (py/import-module "keras"))
-(def keras-layers (py/get-attr keras "layers"))
-
-(def model (py/call-attr  keras "Sequential" [
-                           (py/call-attr-kw keras-layers "Flatten" [] {:input_shape   [28,28]})
-                           (py/call-attr-kw keras-layers "Dense" [128] {:activation  "relu"})
-                           (py/call-attr-kw keras-layers "Dense" [10] {:activation "softmax" })]))
-
-(py/call-attr-kw  model "compile" [] {:optimizer "adam"
-                                      :loss      "sparse_categorical_crossentropy"
-                                      :metrics   (py/->py-list["accuracy"])})
-
-(py/call-attr-kw model "fit" [train-images, train-labels ] {:epochs 10})
-
-(def+ [test-loss test-acc]  (py/call-attr-kw model "evaluate" [test-images, test-labels ] {:verbose 2} ) )
-
-(def predictions (py/call-attr model "predict" test-images))
+(def predictions (Sequential/predict model
+                                     :x test-images))
 
 (defonce np (py/import-module "numpy"))
 (py/call-attr np "argmax" (first predictions))
-
 (first test-labels)
