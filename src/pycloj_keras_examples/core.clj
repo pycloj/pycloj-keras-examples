@@ -34,12 +34,12 @@
 (Sequential/compile model
                     :optimizer "adam"
                     :loss      "sparse_categorical_crossentropy"
-                    :metrics   ["accuracy"])
+                    :metrics   '("accuracy"))
 
 (Sequential/fit model
                 :x train-images
                 :y train-labels
-                :epochs 10)
+                :epochs 1)
 
 
 (def+ [test-loss test-acc]
