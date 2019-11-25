@@ -8,6 +8,8 @@
             [keras.layers.Dense :as Dense :refer [Dense]]
             [libpython-clj.python :as py]))
 
+(defonce keras (py/import-module "keras"))
+(defonce np (py/import-module "numpy"))
 
 (defmacro def+
   "binding => binding-form
@@ -25,7 +27,7 @@
 
 (def+ [[train-images , train-labels], [test-images, test-labels]] (vec mnist-data))
 
-(def model (py/call-attr  keras "Sequential" [(Flatten :input_shape [28,28])
+(def model (py/call-attr  keras "Sequential" [(Flatten)
                                               (Dense :units      128
                                                      :activation "relu")
                                               (Dense :units 10
@@ -39,7 +41,7 @@
 (Sequential/fit model
                 :x train-images
                 :y train-labels
-                :epochs 1)
+                :epochs 10)
 
 
 (def+ [test-loss test-acc]
@@ -51,6 +53,5 @@
 (def predictions (Sequential/predict model
                                      :x test-images))
 
-(defonce np (py/import-module "numpy"))
 (py/call-attr np "argmax" (first predictions))
 (first test-labels)
