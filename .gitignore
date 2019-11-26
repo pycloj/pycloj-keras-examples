@@ -1,4 +1,5 @@
 /target
+target/
 /classes
 /checkouts
 profiles.clj
@@ -10,3 +11,6 @@ pom.xml.asc
 /.nrepl-port
 .hgignore
 .hg/
+target/default/stale/leiningen.core.classpath.extract-native-dependencies
+target/default/classes/META-INF/maven/pycloj-keras-examples/pycloj-keras-examples/pom.properties
+target/default/classes/META-INF/maven/pycloj-keras-examples/pycloj-keras-examples/pom.properties

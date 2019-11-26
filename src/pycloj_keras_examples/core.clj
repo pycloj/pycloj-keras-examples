@@ -28,13 +28,13 @@
 (def+ [[train-images , train-labels], [test-images, test-labels]] (vec mnist-data))
 
 (def model (py/call-attr  keras "Sequential" [(Flatten)
-                                              (Dense :units      128
+                                              (Dense 128
                                                      :activation "relu")
-                                              (Dense :units 10
+                                              (Dense 10
                                                      :activation "softmax")]))
 
 (Sequential/compile model
-                    :optimizer "adam"
+                    "adam"
                     :loss      "sparse_categorical_crossentropy"
                     :metrics   '("accuracy"))
 
@@ -51,7 +51,7 @@
                        :verbose 2) )
 
 (def predictions (Sequential/predict model
-                                     :x test-images))
+                                    test-images))
 
 (py/call-attr np "argmax" (first predictions))
 (first test-labels)
